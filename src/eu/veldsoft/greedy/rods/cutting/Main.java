@@ -44,8 +44,10 @@ public class Main {
 			}
 
 			if (pieces.size() > 0 && size < pieces.lastElement().length) {
+				System.out.print("\t|\t");
+				System.out.print(size);
 				System.out.println();
-				waste += size - cut;
+				waste += size;
 				size = pieces.lastElement().rod;
 				count++;
 			}
