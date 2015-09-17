@@ -24,7 +24,11 @@ public class Main {
 			return;
 		}
 
+		int count = 1;
+		int waste = 0;
 		int size = pieces.elementAt(0).rod;
+		int rod = pieces.elementAt(0).rod;
+		int cut = pieces.elementAt(0).cut;
 		System.out.println();
 		System.out.println(pieces.elementAt(0).label);
 		do {
@@ -41,10 +45,17 @@ public class Main {
 
 			if (pieces.size() > 0 && size < pieces.lastElement().length) {
 				System.out.println();
+				waste += size - cut;
 				size = pieces.lastElement().rod;
+				count++;
 			}
 		} while (pieces.size() > 0);
+		waste += size - cut;
+
 		System.out.println();
+		System.out.println("Number of rods used:\t" + count);
+		System.out.println("Waste:\t" + waste);
+		System.out.println("Waste [%]:\t" + 100.0 * waste / (count * rod));
 	}
 
 	public static void main(String[] args) {
@@ -86,6 +97,26 @@ public class Main {
 		 */
 		for (String label : data.keySet()) {
 			Collections.sort((Vector) data.get(label));
+		}
+
+		/*
+		 * Lower bound of rods using.
+		 */
+		for (String label : data.keySet()) {
+			double sum = 0;
+			for (Piece piece : data.get(label)) {
+				sum += piece.length;
+			}
+
+			if (data.get(label).size() <= 0) {
+				continue;
+			}
+
+			System.out
+					.println(data.get(label).firstElement().label
+							+ "\t"
+							+ (int) Math.ceil(sum
+									/ data.get(label).firstElement().rod));
 		}
 
 		/*
